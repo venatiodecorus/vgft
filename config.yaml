@@ -1,0 +1,6 @@
+# List of sources to scrape
+sources:
+  - "https://lastepoch.fandom.com/wiki/Last_Epoch_Wiki"
+
+# Proxy to use for scraping
+proxy: "socks5://127.0.0.1:1086"
