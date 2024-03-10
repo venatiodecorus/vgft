@@ -3,10 +3,17 @@ import { parseSources } from "./parser.ts";
 
 const router = new Router();
 
-// Kick off the parsing process
-router.get("/parse", (context) => {
-  parseSources();
-  context.response.body = "Hello, world!";
+/**
+ * Parse all sources. Returns 200 if successful, 500 if failed.
+ */
+router.get("/parse", async (context) => {
+  try {
+    await parseSources();
+    context.response.status = 200;
+  } catch (error) {
+    context.response.body = `Failed to parse sources: ${error}`;
+    context.response.status = 500;
+  }
 });
 
 const app = new Application();
