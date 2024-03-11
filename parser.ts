@@ -23,7 +23,7 @@ export async function parseSources() {
           if (visited) {
             continue;
           }
-          const { content, links } = await parsePage(source);
+          const { content, links } = await parsePage(page);
           // Add links to pages object
           links.forEach((link) => {
             if (link !== null && !pages[link]) {
@@ -33,6 +33,7 @@ export async function parseSources() {
           // Write the page to the cache
           cacheFile(page, content);
 
+          console.log(`Cached ${page}`);
           pages[page] = true;
         } catch (error) {
           console.error(`Failed to parse ${page}: ${error}`);
@@ -111,8 +112,8 @@ export async function parsePage(
     }
   });
   const nodes = Array.from(nodesSet);
+  const content = doc.querySelector("body")?.textContent ?? "";
 
   // Return text of the document and the links
-  // TODO parse out relevant content (body only?)
-  return { content: html, links: nodes };
+  return { content: content, links: nodes };
 }
