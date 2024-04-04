@@ -1,6 +1,9 @@
 # List of sources to scrape
 sources:
-  - "https://lastepoch.fandom.com/wiki/Last_Epoch_Wiki"
+  - url: "https://lastepoch.fandom.com/wiki/Last_Epoch_Wiki"
+    selector: ".mw-parser-output"
+    # name: "Last Epoch Wiki"
+    # type: "wiki"
 
 # Proxy to use for scraping
 proxy: "socks5://127.0.0.1:1086"

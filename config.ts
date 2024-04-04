@@ -2,7 +2,10 @@ import { parse } from "https://deno.land/std@0.218.0/yaml/parse.ts";
 import Joi from "npm:joi";
 
 type Config = {
-  sources: string[];
+  sources: {
+    url: string;
+    selector: string;
+  }[];
   proxy?: string;
 };
 
@@ -10,7 +13,12 @@ export let config: Config;
 
 // Config file schema
 const schema = Joi.object<Config>({
-  sources: Joi.array().items(Joi.string()).required(),
+  sources: Joi.array().items(
+    Joi.object({
+      url: Joi.string().uri().required(),
+      selector: Joi.string().required(),
+    }),
+  ).required(),
   proxy: Joi.string().uri().optional(),
 });
 

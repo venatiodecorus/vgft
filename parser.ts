@@ -14,7 +14,7 @@ export async function parseSources() {
   for (const source of config.sources) {
     // Store the URL of pages we've already cached
     const pages: { [key: string]: boolean } = {};
-    pages[source] = false;
+    pages[source.url] = false;
 
     // Iterate through all pages until we've cached them all
     while (Object.values(pages).includes(false)) {
@@ -23,7 +23,7 @@ export async function parseSources() {
           if (visited) {
             continue;
           }
-          const { content, links } = await parsePage(page);
+          const { content, links } = await parsePage(page, source.selector);
           // Add links to pages object
           links.forEach((link) => {
             if (link !== null && !pages[link]) {
@@ -82,6 +82,7 @@ function getClient() {
  */
 export async function parsePage(
   url: string,
+  selector?: string,
 ): Promise<{ content: string; links: (string | null)[] }> {
   const res = await fetch(url, { client: getClient() });
   if (res.status !== 200) {
@@ -106,13 +107,19 @@ export async function parsePage(
     if (href !== null) {
       // Resolve relative URLs
       href = new URL(href, url).href;
-      if (hostnameRegex.test(href)) {
-        nodesSet.add(href);
+      const noQuery = href.split("?")[0];
+      const noHash = noQuery.split("#")[0];
+      if (hostnameRegex.test(noHash)) {
+        // Exclude links to certain file types
+        const fileExtension = noHash.split(".").pop()?.toLowerCase() ?? "";
+        if (!["jpg", "jpeg", "png", "php"].includes(fileExtension)) {
+          nodesSet.add(noHash);
+        }
       }
     }
   });
   const nodes = Array.from(nodesSet);
-  const content = doc.querySelector("body")?.textContent ?? "";
+  const content = doc.querySelector(selector || "body")?.textContent ?? "";
 
   // Return text of the document and the links
   return { content: content, links: nodes };
