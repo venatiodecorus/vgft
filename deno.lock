@@ -687,6 +687,9 @@
     "https://deno.land/x/oak/mod.ts": "https://deno.land/x/oak@14.2.0/mod.ts"
   },
   "remote": {
+    "https://deno.land/std@0.207.0/assert/assert.ts": "9a97dad6d98c238938e7540736b826440ad8c1c1e54430ca4c4e623e585607ee",
+    "https://deno.land/std@0.207.0/assert/assertion_error.ts": "4d0bde9b374dfbcbe8ac23f54f567b77024fb67dbb1906a852d67fe050d42f56",
+    "https://deno.land/std@0.207.0/cli/parse_args.ts": "9bea02050b3f302e706871ff87ecfa3ad82cc34249adbe0dcddfaac75bdb48ff",
     "https://deno.land/std@0.210.0/assert/_constants.ts": "8a9da298c26750b28b326b297316cdde860bc237533b07e1337c021379e6b2a9",
     "https://deno.land/std@0.210.0/assert/_diff.ts": "2c9371f17cf08cbb843c924bc31ca77af422ec4fe162f73d42c651d547573fa8",
     "https://deno.land/std@0.210.0/assert/_format.ts": "335ce8e15c65b679ad142dbc9e5e97e5d58602c39dd3c9175cef6c85fe22d6d5",

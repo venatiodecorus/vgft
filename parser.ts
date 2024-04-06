@@ -100,19 +100,26 @@ export async function parsePage(
     `^(http(s)?:\/\/)?(www\.)?${oUrl.hostname.replace(/\./g, "\\.")}`,
     "i",
   );
+  // Filter out all special pages and non-English pages
+  const pageRegex =
+    /(^(\/es\/))|(\/(Talk|Special|Last_Epoch_Wiki|Last_Epoch_Wiki_talk|User|User_talk|Template|MediaWiki|File)):/i;
 
+  // TODO Cleanup
   const nodesSet = new Set<string>();
   Array.from(doc.querySelectorAll("[href]")).forEach((node) => {
-    let href = (node as Element).getAttribute("href");
+    const href = (node as Element).getAttribute("href");
     if (href !== null) {
       // Resolve relative URLs
-      href = new URL(href, url).href;
-      const noQuery = href.split("?")[0];
+      const href2 = new URL(href, url).href;
+      const noQuery = href2.split("?")[0];
       const noHash = noQuery.split("#")[0];
       if (hostnameRegex.test(noHash)) {
         // Exclude links to certain file types
         const fileExtension = noHash.split(".").pop()?.toLowerCase() ?? "";
-        if (!["jpg", "jpeg", "png", "php"].includes(fileExtension)) {
+        if (
+          !["jpg", "jpeg", "png", "php"].includes(fileExtension) &&
+          pageRegex.test(new URL(href, url).pathname) === false
+        ) {
           nodesSet.add(noHash);
         }
       }

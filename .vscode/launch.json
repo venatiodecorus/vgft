@@ -18,6 +18,22 @@
         "--unstable-http"
       ],
       "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "CLI",
+      "type": "node",
+      "program": "${workspaceFolder}/main.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "/opt/homebrew/bin/deno",
+      "runtimeArgs": [
+        "run",
+        "--inspect-wait",
+        "--allow-all",
+        "--unstable-http"
+      ],
+      "args": ["--run"],
+      "attachSimplePort": 9229
     }
   ]
 }

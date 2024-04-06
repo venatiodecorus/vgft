@@ -1,6 +1,8 @@
 {
   "tasks": {
     "dev": "deno run --watch main.ts",
-    "test": "deno test -A --coverage"
+    "test": "deno test -A --coverage",
+    "cli": "deno run --allow-read --allow-write --allow-net --unstable-http main.ts --run",
+    "serve": "deno run --allow-net --allow-read main.ts --serve"
   }
 }
